@@ -44,7 +44,7 @@ export default function PetButton({
         )}
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle>
             {actionType === 'add' ? 'Add a new pet' : 'Edit pet'}
