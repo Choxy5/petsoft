@@ -39,7 +39,7 @@ export default function PetContextProvider({
     //   ...prev,
     //   {
     //     id: Date.now().toString(),
-    //     ...newPet,
+    //     ...newPet,g
     //   },
     // ]);
     await addPet(newPet);
