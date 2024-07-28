@@ -1,5 +1,5 @@
 'use client';
-import { addPet } from '@/actions/actions';
+import { addPet, editPet } from '@/actions/actions';
 import PetFormBtn from '@/components/pet-form-btn';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,13 +22,22 @@ export default function PetForm({
   return (
     <form
       className="flex flex-col"
-      action={async (FormData) => {
-        const error = await addPet(FormData);
-        if (error) {
-          toast.warning(error.message);
-          return;
+      action={async (formData) => {
+        if (actionType === 'add') {
+          const error = await addPet(formData);
+          if (error) {
+            toast.warning(error.message);
+            return;
+          }
+          onFormSubmission();
+        } else if (actionType === 'edit') {
+          const error = await editPet(selectedPet?.id, formData);
+          if (error) {
+            toast.warning(error.message);
+            return;
+          }
+          onFormSubmission();
         }
-        onFormSubmission();
       }}
     >
       <div className="space-y-3">
