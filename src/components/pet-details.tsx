@@ -1,4 +1,5 @@
 'use client';
+import { deletePet } from '@/actions/actions';
 import PetButton from '@/components/pet-button';
 import { usePetContext } from '@/lib/hooks';
 import { Pet } from '@/lib/types';
@@ -54,7 +55,7 @@ function TopBar({ pet }: Props) {
         <PetButton actionType="edit">Edit</PetButton>
         <PetButton
           actionType="checkout"
-          onClick={() => handleCheckoutPet(pet.id)}
+          onClick={async () => await deletePet(pet.id)}
         >
           Checkout
         </PetButton>
