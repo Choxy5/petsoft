@@ -9,7 +9,7 @@ export async function addPet(pet) {
 
   try {
     await prisma.pet.create({
-      data: pet,
+      data: petData,
     });
   } catch (error) {
     return { message: 'Could not add pet.' };
