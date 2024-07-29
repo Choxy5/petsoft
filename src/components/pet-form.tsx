@@ -17,26 +17,28 @@ export default function PetForm({
   actionType,
   onFormSubmission,
 }: PetFormProps) {
-  const { selectedPet } = usePetContext();
+  const { selectedPet, handleAddPet, handleEditPet } = usePetContext();
 
   return (
     <form
       className="flex flex-col"
       action={async (formData) => {
+        onFormSubmission();
+
+        const petData = {
+          name: formData.get('name') as string,
+          ownerName: formData.get('ownerName') as string,
+          imageUrl:
+            (formData.get('imageUrl') as string) ||
+            'https://bytegrad.com/course-assets/react-nextjs/pet-placeholder.png',
+          age: Number(formData.get('age')),
+          notes: formData.get('notes') as string,
+        };
+
         if (actionType === 'add') {
-          const error = await addPet(formData);
-          if (error) {
-            toast.warning(error.message);
-            return;
-          }
-          onFormSubmission();
+          await handleAddPet(petData);
         } else if (actionType === 'edit') {
-          const error = await editPet(selectedPet?.id, formData);
-          if (error) {
-            toast.warning(error.message);
-            return;
-          }
-          onFormSubmission();
+          await handleEditPet(selectedPet!.id, petData);
         }
       }}
     >

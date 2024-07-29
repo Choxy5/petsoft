@@ -12,7 +12,6 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const pets = await prisma.pet.findMany();
-  console.log(pets.length);
 
   return (
     <>
