@@ -1,4 +1,4 @@
-import { logIn } from '@/actions/actions';
+import { logIn, signUp } from '@/actions/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,8 +8,9 @@ type AuthFormProps = {
 };
 
 export default function AuthForm({ type }: AuthFormProps) {
+  
   return (
-    <form action={logIn}>
+    <form action={type === 'logIn' ? logIn : signUp}>
       <div className="space-y-1">
         <Label htmlFor="email">Email</Label>
         <Input name="email" id="email" type="email" />
