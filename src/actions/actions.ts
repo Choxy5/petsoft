@@ -32,13 +32,14 @@ export async function logIn(prevState: unknown, formData: unknown) {
           };
         }
         default: {
-          message: 'Could not sign in.';
+          return {
+            message: 'Error. Could not sign in.',
+          };
         }
       }
     }
+    throw error; // nextjs redirects throw error, so we need to rethrow it
   }
-
-  redirect('/app/dashboard');
 }
 
 export async function signUp(prevState: unknown, formData: unknown) {
