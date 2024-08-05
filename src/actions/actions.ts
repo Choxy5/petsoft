@@ -25,7 +25,7 @@ export async function logIn(formData: unknown) {
   redirect('/app/dashboard');
 }
 
-export async function signUp(formData: unknown) {
+export async function signUp(prevState: unknown, formData: unknown) {
   await sleep(1000);
 
   // check if formData is a FormData type
