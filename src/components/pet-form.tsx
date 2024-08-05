@@ -5,7 +5,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { usePetContext } from '@/lib/hooks';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DEFAULT_PET_IMAGE } from '@/lib/constants';
 import { petFormSchema, TPetForm } from '@/lib/validations';
