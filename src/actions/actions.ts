@@ -7,10 +7,13 @@ import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { redirect } from 'next/navigation';
 import { checkAuth, getPetById } from '@/lib/server-utils';
+import { Prisma } from '@prisma/client';
 
 // --- USER ACTIONS --- //
 
 export async function logIn(formData: unknown) {
+  await sleep(1000);
+
   if (!(formData instanceof FormData)) {
     return {
       message: 'Invalid form data.',
@@ -23,6 +26,8 @@ export async function logIn(formData: unknown) {
 }
 
 export async function signUp(formData: unknown) {
+  await sleep(1000);
+
   // check if formData is a FormData type
   if (!(formData instanceof FormData)) {
     return {
@@ -43,12 +48,25 @@ export async function signUp(formData: unknown) {
 
   const { email, password } = validatedFormData.data;
   const hashedPassword = await bcrypt.hash(password, 10);
-  await prisma.user.create({
-    data: {
-      email,
-      hashedPassword,
-    },
-  });
+  try {
+    await prisma.user.create({
+      data: {
+        email,
+        hashedPassword,
+      },
+    });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        return {
+          message: 'Email already exists.',
+        };
+      }
+    }
+    return {
+      message: 'Could not create user.',
+    };
+  }
 
   await signIn('credentials', formData);
   redirect('/app/dashboard');
